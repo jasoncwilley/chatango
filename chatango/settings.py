@@ -25,12 +25,12 @@ SECRET_KEY = '^v9c)fgbb*%&3+%6yl4v$t922q&vzbn-#=d_v^akl2l^29(@r8'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [0.0.0.0]
+ALLOWED_HOSTS = ['0.0.0.0']
 
 
 # Application definition
 
-INSTALLED_APPS = [
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'channels',
     'chatango.core.apps.CoreConfig',
     'chatango.channels_app.apps.ChannelsAppConfig',
 ]
@@ -78,11 +79,17 @@ WSGI_APPLICATION = 'chatango.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'myproject',
+        'USER': 'myprojectuser',
+        'PASSWORD': 'password',
+        'ATOMIC_REQUESTS': True,
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
 
+AUTH_USER_MODEL = 'core.User'
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
@@ -121,3 +128,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+ASGI_APPLICATION = "chatango.channels_app.routing.application"
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": ['redis://localhost:6379/4']
+        }
+    },
+}
