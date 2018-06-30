@@ -25,11 +25,12 @@ SECRET_KEY = '^v9c)fgbb*%&3+%6yl4v$t922q&vzbn-#=d_v^akl2l^29(@r8'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [0.0.0.0]
 
 
 # Application definition
 
+INSTALLED_APPS = [
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -37,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'chatango.core.apps.CoreConfig',
+    'chatango.channels_app.apps.ChannelsAppConfig',
 ]
 
 MIDDLEWARE = [
